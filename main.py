@@ -215,7 +215,7 @@ def main():
                 adv_input = {key: value.to(device) for key, value in adv_input.items()}
                 with torch.no_grad():
                     adv_embs = get_emb(c_model, adv_input)  # shape: (len(adv_text_list), emb_dim)
--
+
         iter_result = {}
 
         if args.use_truth == 'True':

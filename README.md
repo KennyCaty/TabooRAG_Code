@@ -26,7 +26,7 @@ python prepare_dataset.py
 
 ### Set API key
 
-Our experiments use GPT-5.2, GPT-5-mini, DeepSeek-V3.2, Qwen3-32B, Gemma-3-12B-IT, Ministral-3-8B-Instruct-2512, and Meta-Llama-3-8B-Instruct. You can configure the API or local settings in the `model_configs` file.
+Our main experiments use Llama-3-8B, Ministral-3-8B, Gemma-3-12B, Qwen3-32B, Qwen3.5-9B, Qwen3.5-35B, DeepSeek-V3.2, DeepSeek-V4-Pro, and GPT-5.2. You can configure the API or local settings in the `model_configs` file.
 
 GPT example:
 ```json
@@ -80,6 +80,5 @@ Execute **run.py** to reproduce experiments.
 ```bash
 python run.py
 ```
-
 
 

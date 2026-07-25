@@ -377,9 +377,10 @@ def generate_initial_context(query: str) -> Optional[Dict[str, str]]:
     You must perform the following steps:
     1.  Invent a specific, factual-sounding "gold answer" for the query. The answer must be a single, short, concise sentence or a phrase/date/number (maximum 20 words) that contains ONLY the answer itself and no introductory or descriptive text. If you don't know the facts, make up a "gold answer".
     2.  Write 4 short benign documents (approx. 100 words each).
-    3.  Document 1 MUST contain information directly related to the "gold answer".
-    4.  Document 2 MUST contain *different* information, but also related to the "gold answer".
-    5.  Documents 3 and 4 MUST have themes similar to the query's theme and be semantically related to the query elements, but they must not contain any part of the "gold answer."
+    3.  Document 1 MUST contain information directly related to the query and "gold answer".
+    4.  Document 2 MUST contain *different* information, but also related to the query and "gold answer".
+    5.  Documents 3 and 4 MUST have themes similar to the query's theme and be semantically related to the query, but they must not contain any part of the "gold answer."
+    Generate documents with the highest possible similarity to the query to facilitate retrieval.
     You must return a single JSON object in the format:
     { "gold_answer": "...", "doc1": "...", "doc2": "...", "doc3": "...", "doc4": "..." }
     """

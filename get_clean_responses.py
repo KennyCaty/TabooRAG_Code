@@ -60,7 +60,7 @@ if __name__ == "__main__":
             completion_kwargs = {
                 "model": model_name,
                 "messages": messages,
-                "temperature": 0.9 if attack else 0.1,
+                "temperature": 0.1,
             }
             if as_json:
                 completion_kwargs["response_format"] = {"type": "json_object"}
@@ -187,6 +187,5 @@ If you cannot find the answer to the question, just say "I don\'t know". \
     torch.cuda.empty_cache()
 
     print('Final successful QA count:', success_cnt, 'out of', len(queries))
-
 
 

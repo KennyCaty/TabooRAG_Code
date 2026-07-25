@@ -151,7 +151,7 @@ def llm_call(system_prompt: str, user_prompt: str, as_json: bool = True, attack=
         completion_kwargs = {
             "model": ATTACK_LLM_MODEL if attack else TARGET_LLM_MODEL,
             "messages": messages,
-            "temperature": 0.1 if attack else 0.1,
+            "temperature": 0.1,
         }
         if judge:
             completion_kwargs["model"] = "gpt-5.2"
@@ -843,5 +843,3 @@ if __name__ == "__main__":
             
     print("--- All tasks completed ---")
     print(f"Final results have been saved to: {OUTPUT_FILE}")
-
-    

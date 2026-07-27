@@ -32,7 +32,7 @@ if __name__ == "__main__":
 
     # RAG args
     parser.add_argument("--dataset", default='nq', choices=['nq', 'msmarco', 'hotpotqa'], help="Evaluated dataset")
-    parser.add_argument("--num_queries", type=int, default=150, help="Num queries to evaluate")
+    parser.add_argument("--num_queries", type=int, default=200, help="Num queries to evaluate")
     parser.add_argument("--k", type=int, default=5, help="Num retrieved documents")
 
     args = parser.parse_args()
@@ -187,5 +187,4 @@ If you cannot find the answer to the question, just say "I don\'t know". \
     torch.cuda.empty_cache()
 
     print('Final successful QA count:', success_cnt, 'out of', len(queries))
-
 

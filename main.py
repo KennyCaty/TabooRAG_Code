@@ -41,6 +41,7 @@ def parse_args():
     parser.add_argument('--model_config_path', default=None, type=str)
     parser.add_argument('--model_name', type=str, default='gpt-5.2')
     parser.add_argument('--top_k', type=int, default=5)
+    parser.add_argument('--num_queries', type=int, default=200, help='Number of queries to evaluate')
     parser.add_argument('--use_truth', type=str, default='False')
     parser.add_argument('--gpu_id', type=int, default=0)
 
@@ -105,7 +106,7 @@ def main():
     if args.eval_dataset == 'msmarco':
         args.split = 'train'
     
-    with open(f"./results/clean_contriever_x_{args.model_name}/{args.eval_dataset}/clean/seed_{args.seed}/clean_results_k5_{args.eval_dataset}150.json", 'r') as f:
+    with open(f"./results/clean_contriever_x_{args.model_name}/{args.eval_dataset}/clean/seed_{args.seed}/clean_results_k5_{args.eval_dataset}{args.num_queries}.json", 'r') as f:
         clean_result = json.load(f)
 
     corpus, queries, qrels = load_beir_datasets(args.eval_dataset, args.split)
@@ -154,7 +155,7 @@ def main():
     asr_list=[]
     ret_list=[]
 
-    N = min(150, len(clean_result_list))
+    N = min(args.num_queries, len(clean_result_list))
 
     asr_cnt = 0
     ret_sublist = []

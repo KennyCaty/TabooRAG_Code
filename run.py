@@ -11,6 +11,7 @@ def run(test_params):
         --query_results_dir {test_params['query_results_dir']}\
         --model_name {test_params['model_name']}\
         --top_k {test_params['top_k']}\
+        --num_queries {test_params['num_queries']}\
         --use_truth {test_params['use_truth']}\
         --gpu_id {test_params['gpu_id']}\
         --attack_method {test_params['attack_method']}\
@@ -58,8 +59,8 @@ test_params = {
     # 'model_name': 'gemma-3-12b-it', 
     # 'model_name': 'deepseek-v3.2', 
     'use_truth': False,
-    # 'top_k': 5, # 默认5
-    'top_k': 10, # 默认5
+    'top_k': 5,
+    'num_queries': 200,
     'gpu_id': 0,
 
     # attack

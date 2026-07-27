@@ -56,8 +56,10 @@ vLLM example (You can set the port number in the `src/models/vLLM_local.py` file
 
 
 ### Get Clean Response
+Our main experiments evaluate 200 queries per dataset.
+
 ```
-python get_clean_response.py --llm_model gpt-5.2
+python get_clean_responses.py --llm_model gpt-5.2 --num_queries 200
 ```
 
 
@@ -66,7 +68,7 @@ Execute `gen_attack_docs.py` to generate Blocking document.
 
 Example:
 ```
-python gen_attack_docs.py --dataset nq
+python gen_attack_docs.py --dataset nq --num_queries 200
 ```
 
 
@@ -80,5 +82,4 @@ Execute **run.py** to reproduce experiments.
 ```bash
 python run.py
 ```
-
 

@@ -58,7 +58,6 @@ class Attacker():
         # assert args.attack_method in ['default', 'whitebox']
         self.args = args
         self.attack_method = args.attack_method
-        self.adv_per_query = args.adv_per_query
         
         self.model = kwargs.get('model', None)
         self.c_model = kwargs.get('c_model', None)
@@ -81,14 +80,14 @@ class Attacker():
     def get_attack(self, target_queries) -> list:
         '''
         This function returns adv_text_groups, which contains adv_texts for M queries
-        For each query, if adv_per_query>1, we use different generated adv_texts or copies of the same adv_text
+        Each query uses one generated adversarial text.
         '''
         adv_text_groups = [] # get the adv_text for the iter
         if self.attack_method == "LM_targeted":
             for i in range(len(target_queries)):
                 question = target_queries[i]['query']
                 id = target_queries[i]['id']
-                adv_texts_b = self.all_adv_texts[id]['adv_texts'][:self.adv_per_query]
+                adv_texts_b = self.all_adv_texts[id]['adv_texts'][:1]
                 adv_text_a = question + "."
                 adv_texts = [adv_text_a + i for i in adv_texts_b]
                 adv_text_groups.append(adv_texts)  
@@ -109,7 +108,7 @@ class Attacker():
             adv_texts_b = self.all_adv_texts[id]['adv_texts']
 
             adv_texts=[]
-            for j in range(self.adv_per_query):
+            for j in range(1):
                 adv_b = adv_texts_b[j]
                 adv_b = self.tokenizer(adv_b, max_length=self.max_seq_length, truncation=True, padding=False)['input_ids']
                 if self.gold_init:

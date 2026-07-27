@@ -8,7 +8,6 @@ import numpy as np
 from src.models import create_model
 from src.utils import load_beir_datasets, load_models
 from src.utils import save_results, load_json, setup_seeds, clean_str, f1_score
-from src.attack import Attacker
 from src.prompts import wrap_prompt
 import torch
 from openai import OpenAI
@@ -47,7 +46,6 @@ def parse_args():
 
     # attack
     parser.add_argument('--attack_method', type=str, default='LM_targeted')
-    parser.add_argument('--adv_per_query', type=int, default=5, help='The number of adv texts for each target query.')
     parser.add_argument('--score_function', type=str, default='dot', choices=['dot', 'cos_sim'])
     parser.add_argument('--seed', type=int, default=10, help='Random seed')
     parser.add_argument("--name", type=str, default='debug', help="Name of log and result.")
@@ -143,11 +141,6 @@ def main():
         model.to(device)
         c_model.eval()
         c_model.to(device) 
-        attacker = Attacker(args,
-                            model=model,
-                            c_model=c_model,
-                            tokenizer=tokenizer,
-                            get_emb=get_emb) 
     
     llm = create_model(args.model_config_path)
 
@@ -185,10 +178,6 @@ def main():
         adv_embs = None
 
         if args.attack_method not in [None, 'None']:
-            top1_idx = list(results[clean_result_list[i]['id']].keys())[0]
-            top1_score = results[clean_result_list[i]['id']][top1_idx]
-            target_query = {'query': question, 'top1_score': top1_score, 'id': clean_result_list[i]['id']}
-
             if len(adv_text_list) > 0:
                 adv_input = tokenizer(adv_text_list, padding=True, truncation=True, return_tensors="pt")
                 adv_input = {key: value.to(device) for key, value in adv_input.items()}

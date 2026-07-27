@@ -186,8 +186,8 @@ def llm_call(system_prompt: str, user_prompt: str, as_json: bool = True, attack=
             LLM_CLIENT = ATTACK_LLM_CLIENT
         else:
             LLM_CLIENT = TARGET_LLM_CLIENT
-        if "qwen3" in ATTACK_LLM_MODEL and attack==True:
-            extra_body={"enable_thinking": False} # If use Qwen-3 Official API
+        if "Qwen3" in ATTACK_LLM_MODEL and attack==True:
+            extra_body={"enable_thinking": False}
         else:
             extra_body = None
         completion = LLM_CLIENT.chat.completions.create(extra_body=extra_body, **completion_kwargs)

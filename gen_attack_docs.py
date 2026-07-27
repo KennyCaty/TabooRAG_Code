@@ -141,10 +141,10 @@ elif "bge-small-en-v1.5" in EMBEDDING_MODEL_NAME:
 
 ATTACK_LLM_MODEL = "gpt-5.2"  
 
-TARGET_LLM_MODEL = "deepseek-v3.2"   # 
+SURROGATE_LLM_MODEL = "deepseek-v3.2"
 
 # STRATEGY_FILE
-STRATEGY_FILE = f"./attack_docs/{args.attack_type}/{args.dataset}/{ATTACK_LLM_MODEL}_attack_{TARGET_LLM_MODEL}_rag_blocking_strategy_library.json"
+STRATEGY_FILE = f"./attack_docs/{args.attack_type}/{args.dataset}/{ATTACK_LLM_MODEL}_attack_{SURROGATE_LLM_MODEL}_rag_blocking_strategy_library.json"
 
 INSPIRATION_COUNT = 10
 
@@ -168,7 +168,7 @@ def llm_call(system_prompt: str, user_prompt: str, as_json: bool = True, attack=
             {"role": "user", "content": user_prompt}
         ]
         completion_kwargs = {
-            "model": ATTACK_LLM_MODEL if attack else TARGET_LLM_MODEL,
+            "model": ATTACK_LLM_MODEL if attack else SURROGATE_LLM_MODEL,
             "messages": messages,
             "temperature": 0.1,
         }
@@ -771,7 +771,7 @@ if __name__ == "__main__":
     max_iterations = 20
     dataset=args.dataset
     
-    OUTPUT_FILE = f"./attack_docs/{args.attack_type}/{args.dataset}/{ATTACK_LLM_MODEL}_attack_{TARGET_LLM_MODEL}_docs.json"
+    OUTPUT_FILE = f"./attack_docs/{args.attack_type}/{args.dataset}/{ATTACK_LLM_MODEL}_attack_{SURROGATE_LLM_MODEL}_docs.json"
 
     # load eval dataset
     corpus, queries, qrels = load_beir_datasets(dataset, split='test')

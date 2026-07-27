@@ -70,7 +70,6 @@ SURROGATE_LLM_CLIENT = openai.OpenAI(base_url="your url", api_key="your api key"
 JUDGE_LLM_CLIENT = openai.OpenAI(base_url="your url", api_key="your api key", max_retries=10)  # Judge LLM client
 
 
-# TODO: Move this helper to utils.
 class CustomOpenAIEmbedding:
     def __init__(
         self, 
@@ -302,7 +301,7 @@ def profile_dict_to_string(profile: Dict[str, Any]) -> str:
 
 
 
-def load_strategy_library() -> List[Dict[str, Any]]:  # MODIFIED: return type
+def load_strategy_library() -> List[Dict[str, Any]]:
     """load strategy library from JSON file"""
     if not os.path.exists(STRATEGY_FILE):
         return []

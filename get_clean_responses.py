@@ -80,7 +80,7 @@ if __name__ == "__main__":
             else:
                 return response_content
         except Exception as e:
-            print(f"LLM 调用失败: {e}")
+            print(f"LLM call failed: {e}")
             print("response:", response_content)
             return None
         
@@ -187,4 +187,3 @@ If you cannot find the answer to the question, just say "I don\'t know". \
     torch.cuda.empty_cache()
 
     print('Final successful QA count:', success_cnt, 'out of', len(queries))
-

@@ -65,12 +65,12 @@ RETRIEVAL_K = 3
 np_seed_random = np.random.default_rng(SEED_VALUE)
 
 
-ATTACK_LLM_CLIENT = openai.OpenAI(base_url="your url", api_key="your api key", max_retries=10)  # 攻击令牌
-TARGET_LLM_CLIENT = openai.OpenAI(base_url="your url", api_key="your api key", max_retries=10)  # 攻击令牌
-JUDGE_LLM_CLIENT = openai.OpenAI(base_url="your url", api_key="your api key", max_retries=10)  # 攻击令牌
+ATTACK_LLM_CLIENT = openai.OpenAI(base_url="your url", api_key="your api key", max_retries=10)  # Attack LLM client
+SURROGATE_LLM_CLIENT = openai.OpenAI(base_url="your url", api_key="your api key", max_retries=10)  # Surrogate LLM client
+JUDGE_LLM_CLIENT = openai.OpenAI(base_url="your url", api_key="your api key", max_retries=10)  # Judge LLM client
 
 
-# 先放在这，1后面放在utils去
+# TODO: Move this helper to utils.
 class CustomOpenAIEmbedding:
     def __init__(
         self, 
@@ -89,7 +89,7 @@ class CustomOpenAIEmbedding:
         self,
         sentences: Union[str, List[str]],
         convert_to_tensor: bool = False,
-        **kwargs: Any # 用于传递 'dimensions', 'encoding_format' 等参数
+        **kwargs: Any  # Passes options such as 'dimensions' and 'encoding_format'.
     ) -> Union[np.ndarray, "torch.Tensor"]:
 
         normalize_embeddings = kwargs.pop('normalize_embeddings', False)
@@ -185,7 +185,7 @@ def llm_call(system_prompt: str, user_prompt: str, as_json: bool = True, attack=
         elif attack:
             LLM_CLIENT = ATTACK_LLM_CLIENT
         else:
-            LLM_CLIENT = TARGET_LLM_CLIENT
+            LLM_CLIENT = SURROGATE_LLM_CLIENT
         if "Qwen3" in ATTACK_LLM_MODEL and attack==True:
             extra_body={"enable_thinking": False}
         else:
@@ -302,7 +302,7 @@ def profile_dict_to_string(profile: Dict[str, Any]) -> str:
 
 
 
-def load_strategy_library() -> List[Dict[str, Any]]: # MODIFIED: 返回类型
+def load_strategy_library() -> List[Dict[str, Any]]:  # MODIFIED: return type
     """load strategy library from JSON file"""
     if not os.path.exists(STRATEGY_FILE):
         return []
@@ -765,7 +765,7 @@ def main_attack_loop(dataset:str='nq', query: str=None, max_iterations: int = 10
     print(f"\n--- Attack failed ---")
     print(f"Maximum number of iterations reached ({max_iterations}).")
     return None
-# --- 执行 ---
+# --- Execution ---
 if __name__ == "__main__":
     
     max_iterations = 20
@@ -817,7 +817,7 @@ if __name__ == "__main__":
         # --- Check whether the run can be skipped ---
         # 1. Strict skip mode (skip_existing): skip as long as a record exists, regardless of success or failure
         if args.skip_existing and question in existing_results_map:
-            # 必须把旧数据加回到 final_attack_docs，否则保存时会丢失
+            # Keep the existing item so it is not lost when results are saved.
             existing_item = existing_results_map[question]
             final_attack_docs.append(existing_item)
             continue 

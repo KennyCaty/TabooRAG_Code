@@ -170,7 +170,7 @@ def main():
         question = clean_result_list[i]['question']
         print(f'Question: {question}\n')
 
-        # qrels 拿到与 question ID 相关联的文档ID（正确答案的文档）
+        # Retrieve the ground-truth document IDs associated with the question ID.
         gt_ids = list(qrels[clean_result_list[i]['id']].keys())
         ground_truth = [corpus[id]["text"] for id in gt_ids]
 
@@ -212,7 +212,7 @@ def main():
             topk_results = [{'score': results[clean_result_list[i]['id']][idx], 'context': corpus[idx]['text']} for idx in topk_idx]
 
             if args.attack_method not in [None, 'None'] and adv_embs is not None:
-                # 计算 query embedding
+                # Compute the query embedding.
                 query_input = tokenizer(question, padding=True, truncation=True, return_tensors="pt")
                 query_input = {key: value.to(device) for key, value in query_input.items()}
                 with torch.no_grad():

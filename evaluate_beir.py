@@ -10,7 +10,7 @@ from beir.retrieval import models
 from beir.datasets.data_loader import GenericDataLoader
 from beir.retrieval.evaluation import EvaluateRetrieval
 from beir.retrieval.search.dense import DenseRetrievalExactSearch as DRES
-# from beir.retrieval.models import DPR  # 已经废弃
+# from beir.retrieval.models import DPR  # Deprecated.
 from beir.retrieval.models import SentenceBERT
 
 
@@ -30,7 +30,7 @@ parser.add_argument('--split', type=str, default='test')
 parser.add_argument('--result_output', default="results/beir_results/debug.json", type=str)
 
 parser.add_argument('--gpu_id', type=int, default=0)
-parser.add_argument("--per_gpu_batch_size", default=512, type=int, help="Batch size per GPU/CPU for indexing.") # 默认64
+parser.add_argument("--per_gpu_batch_size", default=512, type=int, help="Batch size per GPU/CPU for indexing.")
 parser.add_argument('--max_length', type=int, default=128)
 
 args = parser.parse_args()
